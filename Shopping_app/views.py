@@ -14,17 +14,13 @@ from django.db.models import Count
 # Create your views here.
 
 def home_view(request):
-    return render(request, 'home.html')
-
-def index(request):
-    return render(request, 'Shopping_app/index.html')
+    return render(request, 'Shopping_app/home.html')
 
 
-from .models import Product
 
 def product_list_view(request):
     products = Product.objects.all()
-    return render(request, 'product_list.html', {'products': products})
+    return render(request, 'Shopping_app/product_list.html', {'products': products})
 
 
 def add_to_cart_view(request):
@@ -37,12 +33,12 @@ def add_to_cart_view(request):
         customer_name='John Doe',
         customer_email='johndoe@example.com'
     )
-    return redirect('product_list')
+    return redirect('Shopping_app/product_list')
 
 def order_list_view(request):
     orders = Order.objects.all()
     total_sales = Order.objects.aggregate(Sum('total_price'))
-    return render(request, 'order_list.html', {'orders': orders, 'total_sales': total_sales})
+    return render(request, 'Shopping_app/order_list.html', {'orders': orders, 'total_sales': total_sales})
 
 def product_search_view(request):
     query = request.GET.get('q')
@@ -50,7 +46,7 @@ def product_search_view(request):
         Q(name__icontains=query) |
         Q(description__icontains=query)
     )
-    return render(request, 'product_search.html', {'products': products})
+    return render(request, 'Shopping_app/product_search.html', {'products': products})
 
 def login_view(request):
     if request.method == 'POST':
@@ -61,9 +57,9 @@ def login_view(request):
             login(request, user)
             return redirect('product_list')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials.'})
+            return render(request, 'Shopping_app/login.html', {'error': 'Invalid credentials.'})
     else:
-        return render(request, 'login.html')
+        return render(request, 'Shopping_app/login.html')
 
 def order_chart_view(request):
     chart_data = Order.objects.values('product__name').annotate(count=Count('product')).order_by('-count')[:10]
