@@ -1,0 +1,11 @@
+{% for order in orders %}
+    <div>
+        <h2>{{ order.product.name }}</h2>
+        <p>Quantity: {{ order.quantity }}</p>
+        <p>Total Price: ${{ order.total_price }}</p>
+        <p>Customer Name: {{ order.customer_name }}</p>
+        <p>Customer Email: {{ order.customer_email }}</p>
+    </div>
+{% endfor %}
+
+<p>Total Sales: ${{ total_sales.total_price__sum }}</p>
