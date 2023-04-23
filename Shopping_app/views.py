@@ -12,13 +12,14 @@ from django.http import JsonResponse
 from django.db.models import Count
 
 # Create your views here.
-# 在 mysite/views.py 文件中定义视图函数
-from django.http import HttpResponse
+
+def home_view(request):
+    return render(request, 'home.html')
 
 def index(request):
     return render(request, 'Shopping_app/index.html')
 
-from django.shortcuts import render
+
 from .models import Product
 
 def product_list_view(request):
@@ -41,7 +42,7 @@ def add_to_cart_view(request):
 def order_list_view(request):
     orders = Order.objects.all()
     total_sales = Order.objects.aggregate(Sum('total_price'))
-    return render(request, 'order_list.html', {'orders': orders, 'total_sales': total
+    return render(request, 'order_list.html', {'orders': orders, 'total_sales': total_sales})
 
 def product_search_view(request):
     query = request.GET.get('q')
