@@ -11,6 +11,7 @@ import json
 from django.http import JsonResponse
 from django.db.models import Count
 
+
 # Create your views here.
 
 def home_view(request):
@@ -57,9 +58,10 @@ def login_view(request):
             login(request, user)
             return redirect('product_list')
         else:
-            return render(request, 'Shopping_app/login.html', {'error': 'Invalid credentials.'})
+            return render(request, 'login.html', {'error': 'Invalid credentials.'})
     else:
-        return render(request, 'Shopping_app/login.html')
+        return render(request, 'login.html')
+
 
 def order_chart_view(request):
     chart_data = Order.objects.values('product__name').annotate(count=Count('product')).order_by('-count')[:10]
